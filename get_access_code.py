@@ -8,19 +8,16 @@ from env_loader import load_env
 load_env()
 
 SUPABASE_URL = os.getenv(
-    "SSUPABASE_URL",
-    os.getenv("SUPABASE_URL", "https://YOUR_PROJECT_REF.supabase.co"),
+    "SUPABASE_URL",
+    "https://YOUR_PROJECT_REF.supabase.co",
 )
 SUPABASE_KEY = os.getenv(
-    "SSUPABASE_SERVICE_ROLE_KEY",
-    os.getenv(
-        "SUPABASE_SERVICE_ROLE_KEY",
-        os.getenv("SUPABASE_ANON_KEY", "YOUR_SUPABASE_KEY"),
-    ),
+    "SUPABASE_SERVICE_ROLE_KEY",
+    os.getenv("SUPABASE_ANON_KEY", "YOUR_SUPABASE_KEY"),
 )
 SUPABASE_TABLE = os.getenv(
-    "SSUPABASE_TABLE",
-    os.getenv("SUPABASE_TABLE", "breeze_access_codes"),
+    "SUPABASE_TABLE",
+    "breeze_access_codes",
 )
 
 
