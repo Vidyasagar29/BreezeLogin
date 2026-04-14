@@ -10,10 +10,9 @@
     <main class="shell">
       <section class="panel" aria-labelledby="page-title">
         <p class="eyebrow">Breeze API</p>
-        <h1 id="page-title">Save today&apos;s access code</h1>
+        <h1 id="page-title">Save access code</h1>
         <p class="intro">
-          Open the Breeze login page, complete the login, then paste the access code here.
-          The latest code will be saved in Supabase for your other programs.
+          Login, paste API_Session, save.
         </p>
 
         <div class="status" id="config-status" role="status"></div>
@@ -24,7 +23,7 @@
           name="admin-pin"
           type="password"
           autocomplete="current-password"
-          placeholder="Enter your private PIN"
+          placeholder="Private PIN"
         >
 
         <div class="actions">
@@ -39,12 +38,12 @@
             name="access-code"
             rows="4"
             autocomplete="off"
-            placeholder="Paste API_Session or full redirected URL here"
+            placeholder="Paste API_Session or redirected URL"
             required
           ></textarea>
 
           <label for="note">Note</label>
-          <input id="note" name="note" type="text" placeholder="Optional, for example morning login">
+          <input id="note" name="note" type="text" placeholder="Optional">
 
           <button class="primary full" type="submit">Save to Supabase</button>
         </form>
