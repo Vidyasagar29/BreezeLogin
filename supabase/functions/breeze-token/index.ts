@@ -52,9 +52,9 @@ Deno.serve(async (request) => {
         return jsonResponse({ error: "access_code is required" }, 400);
       }
 
-      const supabaseUrl = requiredEnv("SUPABASE_URL");
-      const serviceRoleKey = requiredEnv("SUPABASE_SERVICE_ROLE_KEY");
-      const table = Deno.env.get("SUPABASE_TABLE") || "breeze_access_codes";
+      const supabaseUrl = requiredEnv("SSUPABASE_URL");
+      const serviceRoleKey = requiredEnv("SSUPABASE_SERVICE_ROLE_KEY");
+      const table = Deno.env.get("SSUPABASE_TABLE") || "breeze_access_codes";
       const endpoint = `${supabaseUrl}/rest/v1/${table}?on_conflict=id`;
 
       const response = await fetch(endpoint, {

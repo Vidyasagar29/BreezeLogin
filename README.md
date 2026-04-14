@@ -22,8 +22,9 @@ config.js
 Supabase Edge Function Secrets
   BREEZE_API_KEY
   BREEZE_ADMIN_PIN
-  SUPABASE_SERVICE_ROLE_KEY
-  SUPABASE_TABLE
+  SSUPABASE_URL
+  SSUPABASE_SERVICE_ROLE_KEY
+  SSUPABASE_TABLE
 
 Supabase Database
   latest API_Session / access code
@@ -98,9 +99,9 @@ In Supabase, add these secrets:
 ```text
 BREEZE_API_KEY=your_real_breeze_api_key
 BREEZE_ADMIN_PIN=choose_your_private_pin
-SUPABASE_URL=https://YOUR_PROJECT_REF.supabase.co
-SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
-SUPABASE_TABLE=breeze_access_codes
+SSUPABASE_URL=https://YOUR_PROJECT_REF.supabase.co
+SSUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+SSUPABASE_TABLE=breeze_access_codes
 ```
 
 The admin PIN is what you will type on the webpage before opening the Breeze login link or saving the access code.
@@ -131,6 +132,6 @@ Daily use:
 
 ## Optional: Read Saved Code With Python
 
-`get_access_code.py` can read the latest saved access code if you run it in a trusted place with `SUPABASE_SERVICE_ROLE_KEY`.
+`get_access_code.py` can read the latest saved access code if you run it in a trusted place with `SSUPABASE_SERVICE_ROLE_KEY`.
 
 This is optional and not required for the login webpage.
