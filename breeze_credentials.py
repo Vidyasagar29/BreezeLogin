@@ -19,12 +19,15 @@ def get_breeze_credentials():
         EDGE_FUNCTION_URL,
         json={"action": "get-credentials"},
         headers={
-            "Authorization": f"Bearer {PROGRAM_ACCESS_TOKEN}",
+            "x-program-token": PROGRAM_ACCESS_TOKEN.strip(),
             "Content-Type": "application/json",
         },
         timeout=20,
     )
-    response.raise_for_status()
+
+    if not response.ok:
+        raise RuntimeError(f"{response.status_code} {response.text}")
+
     return response.json()
 
 
