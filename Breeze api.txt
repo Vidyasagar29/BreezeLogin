@@ -1,0 +1,213 @@
+1. #purpose: to login and save access code
+#Input: ID password TOTP
+#Output: Access code
+
+from breeze_connect import BreezeConnect
+
+# Initialize SDK
+breeze = BreezeConnect(api_key="your_api_key")
+
+# Obtain your session key from https://api.icicidirect.com/apiuser/login?api_key=YOUR_API_KEY
+# Incase your api-key has special characters(like +,=,!) then encode the api key before using in the url as shown below.
+import urllib
+print("https://api.icicidirect.com/apiuser/login?api_key="+urllib.parse.quote_plus("your_api_key"))
+
+# Generate Session
+breeze.generate_session(api_secret="your_secret_key",
+                        session_token="your_api_session")
+
+# Generate ISO8601 Date/DateTime String
+import datetime
+iso_date_string = datetime.datetime.strptime("28/02/2021","%d/%m/%Y").isoformat()[:10] + 'T05:30:00.000Z'
+iso_date_time_string = datetime.datetime.strptime("28/02/2021 23:59:59","%d/%m/%Y %H:%M:%S").isoformat()[:19] + '.000Z'
+
+
+
+2. #Purpose: To get Historical data
+breeze.get_historical_data(interval="1minute",
+                  from_date= "2025-02-03T09:20:00.000Z",
+                  to_date= "2025-02-03T09:22:00.000Z",
+                  stock_code="RELIND",
+                  exchange_code="NSE",
+                  product_type="cash")
+	
+#Response: {'Success': [
+  {'datetime': '2025-02-03 09:21:00',
+ 'stock_code': 'RELIND',
+ 'exchange_code': 'NSE',
+ 'product_type': None,
+ 'expiry_date': None,
+ 'right': None,
+ 'strike_price': None,
+ 'open': '1249.85',
+ 'high': '1250.75',
+ 'low': '1248.95',
+ 'close': '1249.95',
+ 'volume': '1951',
+ 'open_interest': None,
+ 'count': 7},
+{'datetime': '2025-02-03 09:22:00',
+ 'stock_code': 'RELIND',
+ 'exchange_code': 'NSE',
+ 'product_type': None,
+ 'expiry_date': None,
+ 'right': None,
+ 'strike_price': None,
+ 'open': '1249.75',
+ 'high': '1250.5',
+ 'low': '1247.95',
+ 'close': '1249',
+ 'volume': '1810',
+ 'open_interest': None,
+ 'count': 8}],
+'Status': 200,
+'Error': None}
+
+
+3. # Purpose: To get Historical data for Options
+
+breeze.get_historical_data(interval="1minute",
+                  from_date= "2025-02-03T09:20:00.000Z",
+                  to_date= "2025-02-03T09:22:00.000Z",
+                  stock_code="NIFTY",
+                  exchange_code="NFO",
+                  product_type="options",
+                  expiry_date="2025-02-06T07:00:00.000Z",
+                  right="call",
+                  strike_price="23200")
+
+#Response: {'Success': [
+  {'datetime': '2025-02-03 09:21:00',
+    'stock_code': 'NIFTY',
+    'exchange_code': 'NFO',
+    'product_type': 'Options',
+    'expiry_date': '06-FEB-25',
+    'right': 'Call',
+    'strike_price': '23200',
+    'open': '201.15',
+    'high': '203.9',
+    'low': '195.5',
+    'close': '197.55',
+    'volume': '304575',
+    'open_interest': '2435175',
+    'count': 6},
+  {'datetime': '2025-02-03 09:22:00',
+    'stock_code': 'NIFTY',
+    'exchange_code': 'NFO',
+    'product_type': 'Options',
+    'expiry_date': '06-FEB-25',
+    'right': 'Call',
+    'strike_price': '23200',
+    'open': '196.85',
+    'high': '201.8',
+    'low': '196.5',
+    'close': '200.3',
+    'volume': '249000',
+    'open_interest': '2435175',
+    'count': 7}],
+'Status': 200,
+'Error': None}
+
+4. #Purpose : To place order for Options
+breeze.place_order(stock_code="NIFTY",
+                  exchange_code="NFO",
+                  product="options",
+                  action="buy",
+                  order_type="limit",
+                  stoploss="",
+                  quantity="75",
+                  price="0.20",
+                  validity="day",
+                  validity_date="2025-02-05T06:00:00.000Z",
+                  disclosed_quantity="0",
+                  expiry_date="2025-02-27T06:00:00.000Z",
+                  right="call",
+                  strike_price="24800")
+
+#Response: {'Success': {'order_id': '202502051400001234',
+'message': 'Successfully Placed the order',
+'user_remark': ''},
+'Status': 200,
+'Error': None}
+
+5. #Purpose: Squareoff order
+breeze.square_off(exchange_code="NFO",
+                  product="options",
+                  stock_code="NIFTY",
+                  expiry_date="2025-02-27T06:00:00.000Z",
+                  right="Call",
+                  strike_price="24000",
+                  action="sell",
+                  order_type="market",
+                  validity="day",
+                  stoploss="0",
+                  quantity="75",
+                  price="0",
+                  validity_date="2025-02-05T06:00:00.000Z",
+                  trade_password="",
+                  disclosed_quantity="0")
+
+#Response: {'Success': 
+{'order_id': '202502052500001234',
+'message': 'Successfully Placed the order',
+'indicator': '0'},
+'Status': 200,
+'Error': None}
+
+6. Purpose: To get trade detail 
+breeze.get_trade_detail(exchange_code="NSE",
+                        order_id="20250205N300012345")
+
+#Response: {'Success': [{'settlement_id': '1234567',
+ 'exchange_trade_id': '123456789',
+ 'executed_quantity': '1',
+ 'action': 'B',
+ 'total_transaction_cost': '0',
+ 'brokerage_amount': '0',
+ 'taxes': '0',
+ 'eatm_withheld_amount': '0',
+ 'cash_withheld_amount': '0',
+ 'execution_price': '452.2',
+ 'stock_code': 'ITC',
+ 'exchange_code': 'NSE',
+ 'trade_id': '2025/1234/12345678',
+ 'exchange_trade_time': '05-Feb-2025 10:41:24'}],
+'Status': 200,
+'Error': None}
+
+7. #Purpose: To fetch quotes
+breeze.get_quotes(stock_code="NIFTY",
+                    exchange_code="NFO",
+                    expiry_date="2025-02-27T06:00:00.000Z",
+                    product_type="futures",
+                    right="others",
+                    strike_price="0")
+
+#Response: {'Success': [{'exchange_code': 'NFO',
+ 'product_type': 'Future',
+ 'stock_code': 'NIFTY',
+ 'expiry_date': '27-Feb-2025',
+ 'right': '*',
+ 'strike_price': 0.0,
+ 'ltp': 23832.85,
+ 'ltt': '05-Feb-2025 09:36:56',
+ 'best_bid_price': 23832.0,
+ 'best_bid_quantity': '1500',
+ 'best_offer_price': 23833.8,
+ 'best_offer_quantity': '150',
+ 'open': 23825.0,
+ 'high': 23840.6,
+ 'low': 23808.0,
+ 'previous_close': 23785.4,
+ 'ltp_percent_change': 0.2,
+ 'upper_circuit': 26163.95,
+ 'lower_circuit': 21406.9,
+ 'total_quantity_traded': '623325',
+ 'spot_price': '23783.7'}],
+'Status': 200,
+'Error': None}
+
+#NOTE:
+For equity, exchange_code = "NSE", expiry_date = "", product_type = "cash", right="", strike_price=""
+For options, exchange_code = "NFO", expiry_date = "27-Feb-2025", product_type = "options", right="call/put", strike_price="24000"
+

@@ -1,0 +1,2 @@
+[functions.breeze-token]
+verify_jwt = false
